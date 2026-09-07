@@ -11,12 +11,39 @@
       "Bash(git status)",
       "Bash(git diff *)",
       "Bash(git log *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit *)"
     ],
-    "deny": ["Bash(git push --force*)", "Bash(git reset --hard*)", "Bash(rm -rf *)"]
+    "deny": [
+      "Bash(git push --force*)",
+      "Bash(git reset --hard*)",
+      "Bash(rm -rf *)",
+      "Bash(sudo *)",
+      "Read(**/.env)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Edit(**/.env)",
+      "Edit(**/*.pem)",
+      "Edit(**/*.key)"
+    ],
+    "defaultMode": "acceptEdits"
   },
-  "sandboxMode": {
-    "enabled": true
+  "sandbox": {
+    "enabled": true,
+    "filesystem": {
+      "denyRead": ["~/.ssh", "~/.aws"]
+    },
+    "network": {
+      "allowedDomains": [
+        "registry.npmjs.org",
+        "github.com",
+        "api.github.com",
+        "api.anthropic.com",
+        "statsig.anthropic.com",
+        "sentry.io"
+      ],
+      "allowManagedDomainsOnly": false
+    }
   },
   "hooks": {
     "PostToolUse": [
