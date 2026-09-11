@@ -12,7 +12,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run lint:fix` — same, applying safe auto-fixes
 - `npm run format` — format the codebase with Prettier
 
-There is no test script configured in `package.json` yet. `.claude/settings.json` runs Prettier automatically after every file write/edit via a `PostToolUse` hook.
+There is no test script configured in `package.json` yet. `.claude/settings.json` runs Prettier automatically after every file write/edit via a `PostToolUse` hook, and blocks `git commit` via a `PreToolUse` hook if `npm run lint` fails.
+
+## Conventions
+
+@.claude/rules/vue-conventions.md
+@.claude/rules/tailwind-conventions.md
+@.claude/rules/vuex-conventions.md
 
 ## Architecture
 

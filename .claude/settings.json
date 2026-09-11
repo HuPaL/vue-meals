@@ -1,18 +1,21 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm install)",
       "Bash(npm run dev)",
       "Bash(npm run build)",
       "Bash(npm run preview)",
       "Bash(npm run lint)",
       "Bash(npm run lint:fix)",
       "Bash(npm run format)",
-      "Bash(git status)",
+      "Bash(npx prettier --check *)",
+      "Bash(git status*)",
       "Bash(git diff *)",
       "Bash(git log *)",
       "Bash(git add *)",
       "Bash(git commit *)"
+    ],
+    "ask": [
+      "Bash(npm install)"
     ],
     "deny": [
       "Bash(git push --force*)",
@@ -53,6 +56,17 @@
           {
             "type": "command",
             "command": "jq -r '.tool_response.filePath // .tool_input.file_path' | { read -r f; npx prettier --ignore-unknown --write \"$f\"; } 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cmd=$(jq -r '.tool_input.command // empty'); case \"$cmd\" in *\"git commit\"*) npm run lint || { echo 'Lint failed - fix errors before committing.' 1>&2; exit 2; } ;; esac"
           }
         ]
       }
